@@ -41,4 +41,7 @@ A simple GUI application in Python for calculating and exporting GPA reports.
 
 6. Click "Export to PDF" to save the GPA report.
 
+## License
+
+This project is licensed under the [MIT License](LICENSE).
 
