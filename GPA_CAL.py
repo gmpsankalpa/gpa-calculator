@@ -43,7 +43,10 @@ class GPA_Calculator:
         self.grade_menu.grid(row=4, column=1, padx=10, pady=10)
 
         self.add_button = tk.Button(root, text="Add Course", command=self.add_course)
-        self.add_button.grid(row=5, column=0, columnspan=2, pady=10)
+        self.add_button.grid(row=5, column=0, columnspan=1, pady=10)
+
+        self.delete_button = tk.Button(root, text="Delete Course", command=self.delete_course)
+        self.delete_button.grid(row=5, column=1, columnspan=1, pady=10)
 
         self.clear_button = tk.Button(root, text="Clear All", command=self.clear_all)
         self.clear_button.grid(row=10, column=0, columnspan=2, pady=10)
@@ -65,7 +68,7 @@ class GPA_Calculator:
 
         self.export_button = tk.Button(root, text="Export to PDF", command=self.export_to_pdf)
         self.export_button.grid(row=9, column=0, columnspan=2, pady=10)
-
+        
         self.total_credit_hours = 0
         self.total_grade_points = 0
 
@@ -91,6 +94,24 @@ class GPA_Calculator:
             self.grade_var.set("A+")  # Set default grade to 'A+'
         except ValueError:
             messagebox.showerror("Error", "Invalid input. Please enter valid values for credit hours.")
+
+    def delete_course(self):
+        selected_index = self.course_listbox.curselection()
+        if selected_index:
+            # Extract credit from the selected course info
+            selected_info = self.course_listbox.get(selected_index)
+            _, credit, _ = [info.strip().split(":")[1] for info in selected_info.split(",")]
+
+            # Update total credit hours and total grade points
+            self.total_credit_hours -= float(credit)
+            self.total_grade_points -= self.convert_grade_to_points(self.grade_var.get()) * float(credit)
+
+            # Delete the selected course from the listbox
+            self.course_listbox.delete(selected_index)
+
+            # Update total credit hours label and recalculate overall GPA
+            self.total_credit_value.config(text=str(self.total_credit_hours))
+            self.calculate_gpa()
 
     def calculate_gpa(self):
         # Calculate overall GPA
