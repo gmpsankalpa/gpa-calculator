@@ -1,6 +1,6 @@
 # GPA Calculator
 
-A simple GUI application in Python for calculating and exporting GPA reports.
+A simple GUI application in Python for calculating and exporting GPA reports.This repository contains a simple GPA (Grade Point Average) calculator implemented in Python using the Tkinter GUI library. The calculator allows users to input course details, such as the course name, credit hours, and grade. It calculates the overall GPA based on the entered information.
 
 ## Features
 
