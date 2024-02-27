@@ -2,11 +2,18 @@ import tkinter as tk
 from tkinter import messagebox, filedialog
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import letter
+from theme import THEMES, apply_theme
 
 class GPA_Calculator:
     def __init__(self, root):
         self.root = root
         self.root.title("GPA Calculator")
+
+        self.theme_var = tk.StringVar(root)
+        self.theme_var.set("light")  # Default theme
+
+        self.theme_menu = tk.OptionMenu(root, self.theme_var, *THEMES.keys(), command=self.change_theme)
+        self.theme_menu.grid(row=11, column=0, columnspan=2, pady=10)
 
         self.student_name_label = tk.Label(root, text="Student Name:")
         self.student_name_label.grid(row=0, column=0, padx=10, pady=10)
@@ -132,6 +139,9 @@ class GPA_Calculator:
         self.total_credit_value.config(text="0")
         self.overall_gpa_value.config(text="0.0")
 
+    def change_theme(self, theme):
+        apply_theme(self.root, theme)
+
     def convert_grade_to_points(self, grade):
         grade_mapping = {
             "A+": 4.0,
@@ -197,4 +207,5 @@ class GPA_Calculator:
 if __name__ == "__main__":
     root = tk.Tk()
     app = GPA_Calculator(root)
+    apply_theme(root, "light")  # Apply the default theme
     root.mainloop()
